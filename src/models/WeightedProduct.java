@@ -24,7 +24,7 @@ public class WeightedProduct extends Product {
 
     @Override
     public double calcPrice(int quantity) {
-        return this.weight * this.pricePerKG;
+        return (this.weight * this.pricePerKG) * quantity;
     }
 
     @Override
