@@ -4,7 +4,6 @@ public class MemberCustomer extends Customer {
     private String membershipStatus;
     private double discountRate;
 
-    // Cleaned up parameters: no need to pass the discount rate manually anymore
     public MemberCustomer(String customerName, int customerID, String phoneNumber, int age, String membershipStatus) {
         super(customerName, customerID, phoneNumber, age);
         this.membershipStatus = membershipStatus;
