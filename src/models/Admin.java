@@ -7,7 +7,7 @@ public class Admin extends User {
     }
 
     public void addProduct() {
-        System.out.println("Admin adding a new product structure...");
+        System.out.println("Admin adding a new product...");
         // TODO: Next phase will accept inputs and append a new row to products.csv
     }
 
