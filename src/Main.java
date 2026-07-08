@@ -33,10 +33,10 @@ public class Main {
             String[] data = line.split(";");
             if (data.length == 4) {
                 // Get data out the file first
-                String name = data[0].trim();
-                String password = data[1].trim();
-                String userType = data[2].trim();
-                int userID = Integer.parseInt(data[3].trim());
+                int userID = Integer.parseInt(data[0].trim());
+                String name = data[1].trim();
+                String password = data[2].trim();
+                String userType = data[3].trim();
 
                 // Check if the name entered matches this user (case sensitive)
                 if (nameEntered.equals(name)) {
@@ -52,7 +52,7 @@ public class Main {
                              cashierMenu(currentUser);
                         } else if (userType.equalsIgnoreCase("admin")) {
                             Admin currentUser = new Admin(name, userID, password);
-                           // cashierMenu(currentUser);
+                           adminMenu(currentUser);
                         }
                     } else {
                         System.out.println("Invalid password. Please try again.");
@@ -116,17 +116,26 @@ public class Main {
         System.out.println("Admin Menu");
         System.out.println("**********************************");
         System.out.println(
-                "Welcome to the Admin menu!\nType in 'A' to add new products.\nType in 'U' to update a product.\nType in 'V' to view sales summary.");
+                "Welcome to the Admin menu!\nType in 'A' to add new products.\nType in 'U' to update a product.\nType in 'V' to view sales summary.\nType in 'QUIT' to close.");
 
-        // while (!input.equalsIgnoreCase("Q")) { // checks if its false, not true
-        // input = scan.nextLine();
-        // if (input.equalsIgnoreCase("T")) {
-        // cashier.processTransaction();
-        // }
-        // if (input.equalsIgnoreCase("Q")) {
-        // cashier.printReceipt();
-        // }
-        // }
+         while (!input.equalsIgnoreCase("QUIT")) { // checks if its false, not true
+            input = SCANNER.nextLine();
+            if (input.equalsIgnoreCase("A")) {
+                admin.addProduct(SCANNER); // use the same scanner so that it doesnt need to be closed/created in the class object and also prevents crashes
+                System.out.println(
+                "Welcome to the Admin menu!\nType in 'A' to add new products.\nType in 'U' to update a product.\nType in 'V' to view sales summary.\nType in 'QUIT' to close.");
+            }
+            if (input.equalsIgnoreCase("U")) {
+                admin.updateProduct(SCANNER);
+                System.out.println(
+                "Welcome to the Admin menu!\nType in 'A' to add new products.\nType in 'U' to update a product.\nType in 'V' to view sales summary.\nType in 'QUIT' to close.");
+            }
+            if (input.equalsIgnoreCase("V")) {
+                admin.viewSalesSummary();
+                System.out.println(
+                "Welcome to the Admin menu!\nType in 'A' to add new products.\nType in 'U' to update a product.\nType in 'V' to view sales summary.\nType in 'QUIT' to close.");
+            }
+        }
         SCANNER.close();
     }
 }
