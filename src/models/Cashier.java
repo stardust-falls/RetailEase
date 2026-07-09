@@ -13,6 +13,7 @@ public class Cashier extends User {
     public void processTransaction() {
         System.out.println("Cashier " + username + " is processing the transaction.");
         // TODO: Tie this to a Transaction object, update stock arrays, and do bill calculations
+        
     }
 
     public void printReceipt() {
