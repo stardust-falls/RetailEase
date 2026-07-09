@@ -49,8 +49,16 @@ public class Admin extends User {
         int quantity = input.nextInt();
         input.nextLine(); 
         
-        System.out.print("Enter Product Type     : ");
+        System.out.print("Enter Product Type    : \n[N for Normal Product/ W for Weighted Product/ R for Regulated Product (Products for 21 y/o and above)] ");
         String productType = input.nextLine();
+        // Check productType typing
+        if (productType.equalsIgnoreCase("W")) {
+            productType = "weighted";
+        } else if (productType.equalsIgnoreCase("R")) {
+            productType = "regulated";
+        } else {
+            productType = "normal";
+        } // just sets to normal if its anything else 
         
         // Step 3: Now open the writer SAFELY after reading is long finished
         try {
@@ -99,8 +107,16 @@ public class Admin extends User {
                 int quantity = input.nextInt();
                 input.nextLine(); 
                 
-                System.out.print("Enter New Product Type     : ");
+                System.out.print("Enter New Product Type     : \n[N for Normal Product/ W for Weighted Product/ R for Regulated Product (Products for 21 y/o and above)] ");
                 String productType = input.nextLine();
+                // Check productType typing
+                if (productType.equalsIgnoreCase("W")) {
+                    productType = "weighted";
+                } else if (productType.equalsIgnoreCase("R")) {
+                    productType = "regulated";
+                } else {
+                    productType = "normal";
+                } // just sets to normal if its anything else 
                 
                 productBuffer[ID] = ID + ";" + name + ";" + price + ";" + quantity + ";" + productType;
                 
