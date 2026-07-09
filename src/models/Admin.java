@@ -16,33 +16,46 @@ public class Admin extends User {
         System.out.println("       INVENTORY: ADD NEW PRODUCT        ");
         System.out.println("=========================================");
         
+        int maxID = -1;
+        
+        // Step 1: Open and read file FIRST, then close it immediately
         try {
             BufferedReader br = Files.newBufferedReader(productsPath);
-            BufferedWriter productWriter = Files.newBufferedWriter(productsPath, StandardOpenOption.APPEND); 
-            
             String line;
-            int productID = 0;
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(";");
-                if (data.length == 4) {
-                    productID++;
+                if (data.length >= 4) { // Changed to >= to handle both 4 or 5 columns safely
+                    int currentID = Integer.parseInt(data[0].trim());
+                    if (currentID > maxID) {
+                        maxID = currentID;
+                    }
                 }
             }
             br.close();
-            
-            System.out.print("Enter Product Name     : ");
-            String name = input.nextLine();
-            
-            System.out.print("Enter Unit Price (RM)  : ");
-            double price = input.nextDouble();
-            
-            System.out.print("Enter Stock Quantity   : ");
-            int quantity = input.nextInt();
+        } catch (IOException E) {
+            // If file doesn't exist yet, we start fresh with maxID = -1
+        }
 
-            System.out.print("Enter product type   : ");
-            String productType = input.nextLine();
-            
-            productWriter.write("\n" + productID + ";" + name + ";" + price + ";" + quantity + ";" + productType);
+        int productID = maxID + 1;
+
+        // Step 2: Collect inputs cleanly
+        System.out.print("Enter Product Name     : ");
+        String name = input.nextLine();
+        
+        System.out.print("Enter Unit Price (RM)  : ");
+        double price = input.nextDouble();
+        
+        System.out.print("Enter Stock Quantity   : ");
+        int quantity = input.nextInt();
+        input.nextLine(); // FIXED: Clear primitive buffer bug before reading a string
+        
+        System.out.print("Enter Product Type     : ");
+        String productType = input.nextLine();
+        
+        // Step 3: Now open the writer SAFELY after reading is long finished
+        try {
+            BufferedWriter productWriter = Files.newBufferedWriter(productsPath, StandardOpenOption.CREATE, StandardOpenOption.APPEND); 
+            productWriter.write(productID + ";" + name + ";" + price + ";" + quantity + ";" + productType + "\n");
             productWriter.close();
             
             System.out.println("\n[SUCCESS] Product catalog updated successfully!\n");
@@ -71,7 +84,7 @@ public class Admin extends User {
             
             System.out.print("Enter Product ID to modify: ");
             int ID = input.nextInt();
-            input.nextLine(); // Clear scanner buffer bug
+            input.nextLine(); // Clear primitive buffer bug
             
             if (ID >= 0 && ID < productCount) {
                 System.out.println("\n--- Current data row found. Enter new details ---");
@@ -84,8 +97,13 @@ public class Admin extends User {
                 
                 System.out.print("Enter New Stock Quantity   : ");
                 int quantity = input.nextInt();
+                input.nextLine(); // FIXED: Clear buffer before reading product type string
                 
-                productBuffer[ID] = ID + ";" + name + ";" + price + ";" + quantity;
+                System.out.print("Enter New Product Type     : ");
+                String productType = input.nextLine();
+                
+                // FIXED: Maintained 5-column scheme inside the update persistence buffer
+                productBuffer[ID] = ID + ";" + name + ";" + price + ";" + quantity + ";" + productType;
                 
                 BufferedWriter productWriter = Files.newBufferedWriter(productsPath);
                 for (int i = 0; i < productCount; i++) {
@@ -106,6 +124,5 @@ public class Admin extends User {
         System.out.println("        SYSTEM REPORT: SALES SUMMARY      ");
         System.out.println("=========================================");
         System.out.println("Generating data analytics... please wait.");
-        // TODO: Next phase implementation
     }
 }
