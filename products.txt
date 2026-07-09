@@ -1,7 +1,5 @@
-<<<<<<< HEAD
-0;FROZENCHUNGUSMEAT;0.0;8;weighted
-=======
-0;sfdsfsdf;100.0;5;normal
-1;Burger;10.0;5;normal
-2;Donut;2.0;100;regulated
->>>>>>> fdb212ac0191d944cb81f8774fcbfa81190d971f
+0;sfdsfsdf;100.0;4;normal
+1;Burger;10.0;2;normal
+2;Donut;2.0;84;regulated
+3;colachungus;5.0;96;normal
+4;swag;10.0;98;regulated

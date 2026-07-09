@@ -79,7 +79,7 @@ public class Transaction {
             // KILL ME
             String allProductsBought = "";
             for (int i = 0; i < itemCount; i++) {
-                allProductsBought += lineItems[i].getProduct().getProductName() + ";" + lineItems[i].getQuantity() + ";" + lineItems[i].getProduct().calcPrice(lineItems[i].getQuantity()); 
+                allProductsBought += lineItems[i].getProduct().getProductName() + ";" + lineItems[i].getQuantity() + ";" + lineItems[i].getProduct().calcPrice(lineItems[i].getQuantity()) + ";"; 
                 // im sorry
                 // gets the product name and quantity of the product bought and price * quantity, should put them in a row
                 // when using in transaction it should have the quantity of the products next to the product name i think idk ill figure this out

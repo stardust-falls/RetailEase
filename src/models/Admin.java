@@ -120,7 +120,6 @@ public class Admin extends User {
                 System.out.print("Enter New Stock Quantity   : ");
                 int quantity = input.nextInt();
                 input.nextLine(); 
-                input.nextLine(); 
                 
                 System.out.print("Enter New Product Type     : \n[N for Normal Product/ W for Weighted Product/ R for Regulated Product (Products for 21 y/o and above)] ");
                 String productType = input.nextLine().trim();

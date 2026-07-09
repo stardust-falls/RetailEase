@@ -92,21 +92,20 @@ public class Main {
     public static void cashierMenu(Cashier cashier) {
         String input = "";
         
-        while (!input.equalsIgnoreCase("Q")) { 
+        while (!input.equalsIgnoreCase("QUIT")) { 
             System.out.println("\n=========================================");
             System.out.println("              CASHIER MENU               ");
             System.out.println("=========================================");
             System.out.println(" [T] Process New Transaction");
-            System.out.println(" [Q] Secure Logout");
+            System.out.println(" [QUIT] Secure Logout");
             System.out.println("-----------------------------------------");
             System.out.print("Select an option > ");
             
             input = SCANNER.nextLine().trim();
             
             if (input.equalsIgnoreCase("T")) {
-                // FIXED: Passed global SCANNER into your finished transaction method
                 cashier.processTransaction(SCANNER);
-            } else if (input.equalsIgnoreCase("Q")) {
+            } else if (input.equalsIgnoreCase("QUIT")) {
                 System.out.println("\n[INFO] Cashier session closed successfully.");
             } else {
                 System.out.println("\n[INVALID] Please select a valid option (T or Q).");
