@@ -1,7 +1,3 @@
-0;cola;3.50;100;normal
-1;eggs;5.00;20
-2;;200.0;1
-3;hi;4.0;5
-4;skskfdkfd;5000.0;20
-5;asdasds;50.0;100
-5;eqwewq;5.0;5;
+0;sfdsfsdf;100.0;5;normal
+1;Burger;10.0;5;normal
+2;Donut;2.0;100;regulated
