@@ -47,7 +47,7 @@ public class Admin extends User {
         
         System.out.print("Enter Stock Quantity   : ");
         int quantity = input.nextInt();
-        input.nextLine(); // FIXED: Clear primitive buffer bug before reading a string
+        input.nextLine(); 
         
         System.out.print("Enter Product Type     : ");
         String productType = input.nextLine();
@@ -84,7 +84,7 @@ public class Admin extends User {
             
             System.out.print("Enter Product ID to modify: ");
             int ID = input.nextInt();
-            input.nextLine(); // Clear primitive buffer bug
+            input.nextLine(); 
             
             if (ID >= 0 && ID < productCount) {
                 System.out.println("\n--- Current data row found. Enter new details ---");
@@ -97,12 +97,11 @@ public class Admin extends User {
                 
                 System.out.print("Enter New Stock Quantity   : ");
                 int quantity = input.nextInt();
-                input.nextLine(); // FIXED: Clear buffer before reading product type string
+                input.nextLine(); 
                 
                 System.out.print("Enter New Product Type     : ");
                 String productType = input.nextLine();
                 
-                // FIXED: Maintained 5-column scheme inside the update persistence buffer
                 productBuffer[ID] = ID + ";" + name + ";" + price + ";" + quantity + ";" + productType;
                 
                 BufferedWriter productWriter = Files.newBufferedWriter(productsPath);
@@ -124,5 +123,50 @@ public class Admin extends User {
         System.out.println("        SYSTEM REPORT: SALES SUMMARY      ");
         System.out.println("=========================================");
         System.out.println("Generating data analytics... please wait.");
+
+        // Statistics tracker
+        int totalItemsBought = 0;
+        double totalSales = 0;
+        int amountOfTransactions = 0;
+        double avgSales = 0;
+        // Check transactions.txt
+        try {
+            BufferedReader br = Files.newBufferedReader(productsPath);
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(";");
+                if (data.length >= 4) { // Changed to >= to handle both 4 or 5 columns safely
+                    int transactionID = Integer.parseInt(data[0].trim());
+                    String customerName = data[1].trim();
+                    int itemCount =  Integer.parseInt(data[2].trim());
+                    double totalAmount = Double.parseDouble(data[3].trim());
+
+                    // Print transaction id and customer name
+                    System.out.println("Transaction ID: " + transactionID);
+                    System.out.println("Customer Name: " + customerName);
+
+                    // print all products bought along with their quantity and price
+                    System.out.println("---PRODUCTS BOUGHT---");
+                    for (int i = 4; i < itemCount + 4; i++) {
+                        System.out.println(data[i].trim() + " x" + data[i + 1].trim() + ": RM" + data[i + 2].trim());
+                    }
+                    System.out.println("--------------------");
+                    System.out.println("Total: RM" + totalAmount);
+                    System.out.println("Total items purchased: " + itemCount);
+
+                    // update statistics
+                    totalItemsBought += itemCount;
+                    totalSales += totalAmount;
+                    amountOfTransactions++;
+                }
+            } // this is deadass evil bro
+            br.close();
+            // final stats
+            avgSales = totalSales / amountOfTransactions;
+            System.out.println("------------------------------------------------");
+            System.out.println("Total items bought: " + totalItemsBought + "\nTotal Sales: RM" + totalSales + "\nAmount of Transactions: " + amountOfTransactions + "\nAverage Sales per Transaction: RM" + avgSales);
+        } catch (IOException E) {
+            // If file doesn't exist yet, we start fresh with maxID = -1
+        }
     }
 }
